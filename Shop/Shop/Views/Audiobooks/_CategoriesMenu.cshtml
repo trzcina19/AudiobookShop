@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Shop.Models.Category>
+@using Shop.Infrastructure
+
+
+<!-- Wybór katergorii   -->
+
+<a name="name=category" id="category"></a>
+
+<div class="col-md-3">
+    <h3 style="text-align:center">Kategorie</h3>
+
+
+
+    <ul>
+        @foreach (var category in Model)
+        {
+            <li class="list-group">
+                <a href="@Url.Action("List", "Audiobooks", new { categoryName = category.CategoryName.ToLower() })" class="list-group-item list-group-item-action">@category.CategoryName</a>
+            </li>
+        }
+    </ul>
+</div>
+
+

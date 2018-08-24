@@ -1,0 +1,129 @@
+﻿@model Shop.ViewModels.EditAudiobookViewModel
+@{
+    ViewBag.Title = "AddAudiobook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <section>
+            <center><h2>Dodaj telefon</h2></center>
+            @* Information about the correct changes *@
+            @if (Model.Confirmation.HasValue && Model.Confirmation.Value)
+            {
+                <div class="correct_validation_message" style="text-align: center; margin: 50px;">
+                    Pomyślnie wprowadzono zmiany!
+                </div>
+            }
+
+
+            @using (@Html.BeginForm("AddAudiobook", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="error-summary-centered">
+                    @Html.ValidationSummary()
+                </div>
+                @Html.HiddenFor(o => o.Audiobook.AudiobookId)
+                @Html.HiddenFor(o => o.Audiobook.DateAdded)
+                @Html.HiddenFor(o => o.Audiobook.ImageFileName)
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    @*//Name phone*@
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Nazwa telefonu</label>
+                            @Html.TextBoxFor(o => o.Audiobook.NameAudiobook, new { @class = "form-control", required = "true" })
+                            <div class="incorrect_validation_message">
+                                @Html.ValidationMessageFor(o => o.Audiobook.NameAudiobook)
+                            </div>
+                        </div>
+                    </div>
+
+                    @*//Price*@
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Cena [zł]</label>
+                            @Html.TextBoxFor(o => o.Audiobook.PriceAudiobook, new { @class = "form-control", })
+                            <div class="incorrect_validation_message">
+                                @Html.ValidationMessageFor(o => o.Audiobook.PriceAudiobook)
+                            </div>
+                        </div>
+                    </div>
+
+                    @*//DescriptionPhone*@
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Opis telefonu</label>
+                            @Html.TextAreaFor(o => o.Audiobook.DescriptionAudiobook, new { @class = "form-control", rows = "6", required = "true" })
+                            <div class="incorrect_validation_message">
+                                @Html.ValidationMessageFor(o => o.Audiobook.DescriptionAudiobook)
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        @*//Category phone*@
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">Kategoria telefonu</label><br />
+                                <div>
+                                    @Html.DropDownListFor(m => m.Audiobook.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName", Model.Categories.First().CategoryId))
+                                </div>
+                            </div>
+                        </div>
+
+                        @*//Bestseller*@
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">Bestseller</label>
+                                @Html.CheckBoxFor(o => o.Audiobook.Bestseller)
+                            </div>
+                        </div>
+
+                        @* Phone image *@
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            @if (ViewBag.EditMode == null || !ViewBag.EditMode)
+                            {
+                                <label class="control-label">Zdjęcie telefonu (*)</label>
+                                <div>
+                                    <input type="file" name="file" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        @if (ViewBag.EditMode)
+                        {
+                            if (Model.Audiobook.LackAudiobook)
+                            {
+                                // Button "Przywróć"
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <a style="margin:10px;" href="@Url.Action("ShowAudiobook", "Manage", new { AudiobookId = Model.Audiobook.AudiobookId})" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true">Przywróć</a>
+                                </div>
+                            }
+                            else
+                            {
+                                // Button "Usuń"
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <a style="margin:10px;" href="@Url.Action("LackAudiobook", "Manage", new { AudiobookId = Model.Audiobook.AudiobookId})" class="btn btn-warning btn-lg btn-block" role="button" aria-pressed="true">Usuń</a>
+                                </div>
+                            }
+                        }
+                        @* Button "Zapisz" *@
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <button style="margin:10px;" type="submit" class="btn btn-success btn-lg btn-block">Zapisz</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align:center">(*) Zdjęcia w kształcie kwadratu. Sugerowany rozmiar zdjęcia to 700 x 700px.</div>
+            }
+
+        </section>
+    </div>
+</div>
+

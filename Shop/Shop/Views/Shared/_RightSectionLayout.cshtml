@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@* Render *@
+
+<div class="container">
+    <div class="row">
+
+        @Html.Action("CategoriesMenu", "Audiobooks")
+
+
+        <div class="col-md-9">
+            <section>
+                @* Site map *@
+                <div class="col-md-12" style="text-align:center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                           @* <li class="breadcrumb-item"><a href="@Url.Action("StaticPages","Home", new { name ="Index"})"><span class="glyphicon glyphicon-home"></span> Strona główna</a></li>*@
+                            <li class="breadcrumb-item active" aria-current="page"><span class="glyphicon glyphicon-home"></span>@Html.MvcSiteMap().SiteMapPath()</li>
+                        </ol>
+                    </nav>
+                </div>
+                <h1>
+                    @RenderSection("SectionTitle", required: false)
+                </h1>
+                @RenderBody()
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+    @RenderSection("Scripts", required: false)
+}
+

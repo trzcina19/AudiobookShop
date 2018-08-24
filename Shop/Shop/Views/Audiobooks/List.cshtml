@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "List produktów dla wybranej kategorii";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+
+        @*Categories*@
+        @Html.Action("CategoriesMenu")
+
+        @*Content*@
+        <section class="col-md-9">
+            @*<div class="mvc_site_map">
+                <i class="glyphicon glyphicon-home"></i> @Html.MvcSiteMap().SiteMapPath()
+            </div>*@
+
+
+
+            @* Site map *@
+            <div class="col-md-12" style="text-align:center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        @* <li class="breadcrumb-item"><a href="@Url.Action("StaticPages","Home", new { name ="Index"})"><span class="glyphicon glyphicon-home"></span> Strona główna</a></li>*@
+                        <li class="breadcrumb-item active" aria-current="page"><span class="glyphicon glyphicon-home"></span>@Html.MvcSiteMap().SiteMapPath()</li>
+                    </ol>   
+                </nav>
+            </div>
+
+
+
+
+
+
+            <div> @Html.Partial("_AudiobooksList")</div>
+        </section>
+    </div>
+</div>
+

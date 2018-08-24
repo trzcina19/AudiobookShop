@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Shop.Models.Audiobook>
+@using Shop.Infrastructure
+@*<ul class="col_index">
+        @foreach (var audiobook in Model)
+        {
+            // Phone window
+            <li class="col-md-4 col-sm-6 col-xs-12">
+                <div class="phon_window" style="margin-bottom:10px;">
+                    <a style="margin:1px;" href="@Url.Action("Details", "Audiobooks", new { id = audiobook.AudiobookId})" class="thumbnail">
+                        <div class="audiobook_name">
+                            @audiobook.NameAudiobook
+                        </div>
+                        <img class="img-responsive" src="@Url.ImagesPath(audiobook.ImageFileName)" />
+                    </a>
+
+                    <a href="@Url.Action("AddToCart","Cart", new { id = audiobook.AudiobookId })" role="button" class="btn btn-success btn-lg btn-block">
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Dodaj do koszyka
+                    </a>
+                </div>
+            </li>
+        }
+    </ul>*@
+
+
+
+
+
+
+
+
+<div class="row">
+    @foreach (var audiobook in Model)
+    {
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+
+                <a href="@Url.Action("Details", "Audiobooks", new { id = audiobook.AudiobookId})">
+                <img style="max-width:250px; max-height:250px" class="card-img-top" src="@Url.ImagesPath(audiobook.ImageFileName)" alt="Zdjęcie człowieka w kapturze z pochodnią">
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="@Url.Action("Details", "Audiobooks", new { id = audiobook.AudiobookId})">  @audiobook.NameAudiobook</a>
+                    </h4>
+                    <h5>@audiobook.PriceAudiobook zł</h5>
+                    @* <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A   met numquam aspernatur!</p>*@
+                </div>
+
+                <a role="button" class="btn btn-dark" href="@Url.Action("AddToCart", "Cart", new { id = audiobook.AudiobookId })">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>Dodaj do koszyka
+                </a>
+
+
+            </div>
+        </div>
+    }
+</div>
+    

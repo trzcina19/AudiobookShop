@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <title>@ViewBag.Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- CSS -->
+    <link type="text/css" rel="stylesheet" href="~/Content/Style.css" />
+    <link href="~/Content/Styles/informationView.css" rel="stylesheet" />
+
+    <!-- Bootstrap CSS -->
+    @*    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">*@
+    <link href="~/Content/glyphicon.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/open-iconic-master/font/css/open-iconic-bootstrap.css" rel="stylesheet" />
+
+    @* Styles to choose (default, highCotrast)*@
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles/default.css" title="default" />
+    <link rel="alternate stylesheet" type="text/css" href="~/Content/Styles/highContrast.css" title="alternate" />
+
+    @* Styles to choose (default,mediumFont,largeFont) *@
+    <link rel="alternate stylesheet" type="text/css" href="~/Content/Styles/default.css" title="normalFont" />
+    <link rel="alternate stylesheet" type="text/css" href="~/Content/Styles/mediumFont.css" title="mediumFont" />
+    <link rel="alternate stylesheet" id="docStyleSheets" type="text/css" href="~/Content/Styles/largeFont.css" title="largeFont" />
+
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery-3.1.1.js"></script>
+    <script type="text/javascript" language="javascript" src="jquery.js"></script>
+    <script type="text/javascript" language="javascript" src="jquery.cookie.js"></script>
+    <script src="~/Scripts/Other/ChangeStyle.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <ul class="nav">
+        <li><a href="#main" tabindex="1">Przejdź do strony głównej</a></li>
+        <li><a href="#search" tabindex="2">Przejdź do wyszukiwarki</a></li>
+        <li><a href="#category" tabindex="3">Przejdź do wyboru kategorii</a></li>
+        <li><a href="#content" tabindex="4">Przejdź do treści strony</a></li>
+        <li><a href="#footer" tabindex="5">Przejdź do stopki strony</a></li>
+    </ul>
+
+    <a name="name=content" id="content"></a>
+
+    <center>
+        <header style="background-color:black; padding:5px;">
+            <span>
+
+                <span>
+
+                    <span id="sizeFont" style="color:white">Rozmiar czcionki:</span>
+                    <button href="#" onclick="setStyle1('default'); return false;" type="button" class="btn btn-dark">A</button>
+                    <button href="#" onclick="setStyle1('mediumFont',1); return false;" type="button" class="btn btn-dark">A+</button>
+                    <button href="#" onclick="setStyle1('largeFont'); return false;" type="button" class="btn btn-dark">A++</button>
+
+                </span>
+
+                <span>
+                    <span id="viewSite" style="color:white">            Wygląd strony:</span>
+                    <button id="lightview" href="#" onclick="setStyle('default'); return false;" type="button" class="btn btn-light">A</button>
+                    <button id="hightContrastView" href="#" onclick="setStyle('alternate'); return false;" type="button" class="btn btn-warning">A</button>
+
+                </span>
+            </span>
+
+        </header>
+
+    </center>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+
+        <a id="btnMainPage" class="navbar-brand" href="@Url.Action("StaticPages","Home", new { name ="Index"})">
+            Strona główna
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+
+
+                @using Microsoft.AspNet.Identity
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("Logoff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                        @Html.AntiForgeryToken()
+                    }
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Manage")">Twoje dane</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ListOrders", "Manage")">Zamówienia</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+
+                        @Html.ActionLink("Rejestracja", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link nav - item" })
+
+                    </li>
+                }
+
+                @if (@User.IsInRole("Admin"))
+                {
+                    <li>
+                        <a href="@Url.Action("AddAudiobook", "Manage")">Dodaj telefon</a>
+                    </li>
+                }
+
+                <li>
+                    <a class="nav-link" href="@Url.Action("Index","Cart")">
+                        Koszyk (<span id="cart-header-amount-elements">@Html.Action("DownloadAmountElementsInCart", "Cart")</span>)
+                    </a>
+                </li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li>
+                        <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Wyloguj(@User.Identity.GetUserName()) </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="li_navba">
+
+                        @Html.ActionLink("Zaloguj", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })
+
+
+                    </li>
+                }
+
+            </ul>
+
+
+            <form class="form-inline my-2 my-lg-0">
+                <!-- Wyszukiwarka  -->
+                <a name="name=search" id="search"></a>
+                <input class="form-control mr-sm-2" type="search" placeholder="Wpisz wyszukiwaną frazę" aria-label="Szukaj">
+                <button id="btnSearch" class="btn btn-outline-light my-2 my-sm-0" type="submit">Szukaj</button>
+            </form>
+        </div>
+    </nav>
+
+
+    <div class="jumbotron jumbotron-fluid">
+
+    <!-- https://unsplash.com/photos/cZWZjymwI9o   -->
+        <div class="container  text-center">
+            <h1>Internetowy sklep z audibookami</h1>
+        </div>
+    </div>
+
+    <!-- The main content of the page   -->
+    <a name="name=content" id="content"></a>
+
+    <div class="container" style="margin-bottom:100px; margin-top:50px; padding:10px">
+        @RenderBody()
+    </div>
+
+    <!-- Footer  -->
+    <a name="name=footer" id="footer"></a>
+    <footer class="container-fluid">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="badge badge-light" href="@Url.Action("StaticPages","Home", new { name ="Onas"})">O nas</a>
+            </li>
+            <li class="nav-item">
+                <a class="badge badge-light" href="@Url.Action("StaticPages","Home", new { name ="Kontakt"})">Kontakt</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="badge badge-light" href="@Url.Action("StaticPages","Home", new { name ="Pomoc"})">Pomoc</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="badge badge-light " href="@Url.Action("StaticPages","Home", new { name ="Regulamin"})">Regulamin</a>
+            </li>
+        </ul>
+        <p id="copyright">&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+

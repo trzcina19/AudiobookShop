@@ -1,0 +1,85 @@
+﻿@model Shop.ViewModels.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_RightSectionLayout.cshtml";
+}
+
+@section SectionTitle
+{
+    <center>Rejestracja</center>
+}
+
+<div>
+    @using (@Html.BeginForm("Register", "Account"))
+    {
+        @Html.AntiForgeryToken()
+        // Register error
+        <div class="incorrect_validation_message">
+            @Html.ValidationMessage("new-password-error", "")<br />
+            @Html.ValidationMessage("email-error", "")
+        </div>
+
+        <div class="alert alert-warning" role="alert">
+            <p>
+                @Html.ValidationMessageFor(o => o.Email)
+            </p>
+
+            <p>
+                @Html.ValidationMessageFor(o => o.Password)
+            </p>
+            <p>
+                @Html.ValidationMessageFor(o => o.ConfirmPassword)
+            </p>
+        </div>
+
+        <form>
+            @* E-mail *@
+            <div class="form-group">
+                <label>E-mail</label>
+                <div class="form-group">
+                    @* <span class="input-group-addon"></span>*@
+                    @Html.TextBoxFor(o => o.Email, new { @class = "form-control", placeholder = "Podaj swój e-mail", required = "true" })
+                </div>
+                <div class="incorrect_validation_message">
+             @*       @Html.ValidationMessageFor(o => o.Email)*@
+                </div>
+            </div>
+
+            @*  Password *@
+            <div id="#myform" class="form-group">
+                <label>Hasło</label>
+                <div class="form-group">
+                    <span class="input-group-addon"></span>
+                    @Html.PasswordFor(o => o.Password, new { @class = "form-control", placeholder = "Podaj swoje hasło", required = "true" })
+                </div>
+                <div class="incorrect_validation_message">
+              @*      @Html.ValidationMessageFor(o => o.Password)*@
+                </div>
+            </div>
+
+            @* Confirm Password  + button "Zarejestruj" *@
+            <div class="form-group">
+                <label>Potwierdź hasło</label>
+                <div class="form-group">
+                    <span class="input-group-addon"></span>
+                    @Html.PasswordFor(o => o.ConfirmPassword, new { @class = "form-control", placeholder = "Powtórz swoje hasło", required = "true" })
+                </div>
+                <div class="incorrect_validation_message">
+              @*      @Html.ValidationMessageFor(o => o.ConfirmPassword)*@
+                </div>
+
+                <div style="text-align:center">
+                    <button style="margin: 20px; padding: 20px;" type="submit" class="btn btn-success"> Zarejestruj </button>
+                </div>
+            </div>
+        </form>
+    }
+</div>
+
+
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}

@@ -1,0 +1,66 @@
+﻿@model Shop.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_RightSectionLayout.cshtml";
+}
+
+@section SectionTitle
+{
+    <center>Zaloguj się</center>
+}
+
+<div>
+    @using (@Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        // Login  error
+        <div class="incorrect_validation_message">
+            @Html.ValidationMessage("loginerror", "")
+        </div>
+
+        // Email and password field
+        <form>
+            @* Email *@
+            <div class="form-group">
+                <label class="control-label" for="Email">Email</label>
+                @Html.TextBoxFor(o => o.Email, new { @class = "form-control", placeholder = "Podaj e-mail", required = "true" })
+                <div class="incorrect_validation_message">
+                    @Html.ValidationMessageFor(o => o.Email)
+                </div>
+            </div>
+            @* Password *@
+            <div class="form-group">
+                <label class="control-label" for="Password">Hasło</label>
+                @Html.PasswordFor(o => o.Password, new { @class = "form-control", placeholder = "Podaj hasło", required = "true" })
+                <div class="incorrect_validation_message">
+                    @Html.ValidationMessageFor(o => o.Password)
+                </div>
+            </div>
+            <div>
+                @* Checkbox "Zapamiętaj mnie"  + button "Zaloguj" *@
+                <div style="text-align: center">
+                    <div class="checkbox" style="margin-bottom: 10px;">
+                        @Html.CheckBoxFor(m => m.RememberMe, new { @checked = "checked" })
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                    <button style="margin: 20px; padding: 20px;" type="submit" class="btn btn-success"> Zaloguj </button>
+                </div>
+
+            </div>
+        </form>
+    }
+    @* New account *@
+    <div class="Log">
+        <a href="@Url.Action("Register")">Nie mam jeszcze konta</a>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+}

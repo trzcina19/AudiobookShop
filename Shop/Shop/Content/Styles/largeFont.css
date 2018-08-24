@@ -1,0 +1,66 @@
+﻿
+h1, .h1 {
+    font-size: 4.5rem;
+}
+
+h2, .h2 {
+    font-size: 3rem;
+}
+
+h3, .h3 {
+    font-size: 2.75rem;
+}
+
+h4, .h4 {
+    font-size: 2.5rem;
+}
+
+h5, .h5 {
+    font-size: 2.25rem;
+}
+
+h6, .h6 {
+    font-size: 2rem;
+}
+
+a{
+    font-size: 2rem;
+}
+
+#btnSearch{
+    font-size:2rem!important;
+
+}
+
+input {
+    font-size: 2rem !important;
+}
+
+
+
+#btnMainPage {
+    font-size: 2.5rem !important;
+}
+
+
+header {
+    font-size: 2.5rem !important;
+}
+
+#lightview {
+    font-size: 2.5rem !important;
+}
+
+#hightContrastView {
+    font-size: 2.5rem !important;
+}
+
+
+.btn ,.btn-dark {
+    font-size: 2rem !important;
+}
+
+section {
+    font-size: 3rem;
+}
+

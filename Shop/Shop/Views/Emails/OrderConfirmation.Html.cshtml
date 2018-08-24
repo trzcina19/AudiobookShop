@@ -1,0 +1,46 @@
+﻿@model Shop.ViewModels.OrderConfirmationEmail
+Content-Type: text/html; charset=utf-8
+<html>
+<head>
+</head>
+<body>
+    <div style="text-align:center; margin:auto;">@Html.EmbedImage("~/content/Images/logo_email.png")</div>
+    <div style="padding: 20px;">
+        <p style="text-indent: 1.5em;"> Witaj. Dziękujemy za złożenie zamówienia w serwisie Audiobooks.</p>
+        <p>Zamówione pozycje:</p>
+
+        @{
+            IEnumerable<Shop.Models.PositionOrder> orderPosition = Model.PositionsOrder;
+            for (int i = 0; i < orderPosition.Count(); i++)
+            {
+                <ul>
+                    <li>
+                        <b>
+                            @orderPosition.ElementAt(i).audiobook.Category.CategoryName - @orderPosition.ElementAt(i).audiobook.NameAudiobook -
+                            @orderPosition.ElementAt(i).audiobook.PriceAudiobook zł - @orderPosition.ElementAt(i).Amount szt.
+                        </b>
+                    </li>
+                </ul>
+
+            }
+        }
+        <p>
+            Prosimy o przelanie kwoty <b>@Model.OrderValue zł</b>. W tytule przelewu należy umieścić nr zamówienia: "<b>@Model.OrderId</b>"
+        </p>
+        <p> </p>
+        <p>Dane do przelewu:</p>
+        <p style="margin-left:30px;">
+            <b>
+                Audiobooks Sp. z o.o <br />
+                ul. Łódzka 5/1<br />
+                62-840 Kalisz<br />
+                PKO BP 00 0000 0000 0000 0000 0000
+            </b>
+        </p>
+        <p>Po zaksięgowaniu wpłaty, towar wysyłamy w ciągu 3 dni roboczych.</p>
+        <p>Dziękujemy za skorzystanie z naszej oferty i zapraszamy ponownie!</p>
+        <p>E-mail wysłany automatycznie. Prosimy nie odpisywać.</p>
+        <p style="text-indent: 1.5em;">Zezpół Audiobooks</p>
+    </div>
+</body>
+</html>

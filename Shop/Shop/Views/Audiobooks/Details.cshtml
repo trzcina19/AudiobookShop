@@ -1,0 +1,80 @@
+﻿@model Shop.Models.Audiobook
+@using Shop.Infrastructure
+
+
+@{
+    ViewBag.Title = "Szczegóły produktu " + @Model.NameAudiobook;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+
+    
+            @* Categories *@
+            @Html.Action("CategoriesMenu")
+
+            @* Content *@
+            <section class="col-md-9">
+                <div class="col-md-6 col-sm-10 col-xs-12">
+                    <div class="mvc_site_map">
+                        <i class="glyphicon glyphicon-home"></i> @Html.MvcSiteMap().SiteMapPath()
+                    </div>
+                    @* Section left *@
+                    <div class="section_left">
+                        <a class="thumbnail" data-toggle="modal" data-target="#myModal" style="margin:0px;">
+                            <center><img class="img-responsive" src="@Url.ImagesPath(Model.ImageFileName)" /></center>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Zamknij</span></button>
+                                <h4 class="modal-title" id="myModalLabel" style="text-align:center">@Model.Category.CategoryName  @Model.NameAudiobook</h4>
+                            </div>
+                            <div class="modal-body" style="text-align:center;">
+                                <div class="table-responsive">
+                                    <img src="@Url.ImagesPath(Model.ImageFileName)" />
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Section Right*@
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                    <div class="section_right">
+                        <div class="phone_name_details">
+                            <h1>@Model.Category.CategoryName  @Model.NameAudiobook</h1>
+                        </div>
+                        <div class="price_phone_details">
+                            <div>
+                                <h3>Cena:   @Model.PriceAudiobook <span>PLN</span></h3>
+                            </div>
+                            <a href="@Url.Action("AddToCart","Cart", new { id = Model.AudiobookId})"></a>
+                        </div>
+                        <div class="phone_details">
+                            @Model.DescriptionAudiobook
+                        </div>
+                        <a href="@Url.Action("AddToCart","Cart", new { id = Model.AudiobookId })" class="btn btn-success btn-lg btn-block" role="button">
+                            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Dodaj do koszyka
+                        </a>
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <a href="@Url.Action("AddAudiobook", "Manage", new { AudiobookId = Model.AudiobookId })" class="btn btn-success btn-lg btn-block" role="button">
+                                Edytuj
+                            </a>
+                        }
+                    </div>
+                </div>
+            </section>
+
+    </div>
+</div>
+

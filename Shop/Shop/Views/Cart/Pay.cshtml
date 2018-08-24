@@ -1,0 +1,73 @@
+﻿@model Shop.Models.Order
+
+@{
+    ViewBag.Title = "Pay";
+    Layout = "~/Views/Shared/_RightSectionLayout.cshtml";
+}
+
+@section SectionTitle{
+    <center>Uzupełnij dane zamówienia</center>
+}
+
+
+
+@using (@Html.BeginForm("Pay", "Cart"))
+{
+    // Name
+    <div class="form-group">
+        <label class="control-label">Imię</label>
+        @Html.TextBoxFor(o => o.Name, new { @class = "form-control", placeholder = "Podaj imię", required = "true" })
+        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.Name)</div>
+    </div>
+
+    // Surname
+    <div class="form-group">
+        <label class="control-label">Nazwisko</label>
+        @Html.TextBoxFor(o => o.Surname, new { @class = "form-control", placeholder = "Podaj nazwisko", required = "true" })
+        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.Surname)</div>
+    </div>
+
+    // Adres
+    <div class="form-group">
+        <label class="control-label">Adres</label>
+        @Html.TextBoxFor(o => o.Street, new { @class = "form-control", placeholder = "Podaj adres", required = "true" })
+        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.Street)</div>
+    </div>
+
+    // City
+    <div class="form-group">
+        <label class="control-label">Miasto</label>
+        @Html.TextBoxFor(o => o.City, new { @class = "form-control", placeholder = "Podaj miasto", required = "true" })
+        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.City)</div>
+    </div>
+
+    // Postal Code
+    <div class="form-group">
+        <label class="control-label">Kod pocztowy</label>
+        @Html.TextBoxFor(o => o.PostalCode, new { @class = "form-control", placeholder = "Podaj kod pocztowy", required = "true" })
+        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.PostalCode)</div>
+    </div>
+
+    // Phone number
+    <div class="form-group">
+        <label class="control-label">Numer telefonu</label>
+        @Html.TextBoxFor(o => o.PhoneNumber, new { @class = "form-control", placeholder = " Podaj numer telefonu", required = "true" })
+        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.PhoneNumber)</div>
+    </div>
+    // E-mail
+    <div class="form-group">
+        <label class="control-label">Adres e-mail</label>
+        @Html.TextBoxFor(o => o.Email, new { @class = "form-control", placeholder = "Podaj adres e-mail", required = "true" })
+        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.Email)</div>
+    </div>
+
+    <center><button style="margin: 20px; padding: 20px;" type="submit" value="Potwierdź" class="btn btn-success">Potwierdź</button></center>
+}
+
+
+
+@section Scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+}

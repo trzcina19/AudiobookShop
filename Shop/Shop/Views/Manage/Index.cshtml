@@ -1,0 +1,132 @@
+﻿@model Shop.ViewModels.ManageCredentialsViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        <section class="col-md-12 col-sm-12 col-xs-12">
+            @using (@Html.BeginForm("ChangeProfile", "Manage"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                    <h2 style="margin-bottom: 30px;text-align:center">Twoje dane</h2>
+                    @* Name *@
+                    <div class="form-group">
+                        <label class="control-label">Imię</label>
+                        @Html.TextBoxFor(o => o.UserData.Name, new { @class = "form-control", placeholder = "Podaj imię", required = "true" })
+                        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.UserData.Name)</div>
+                    </div>
+                    @* Surname *@
+                    <div class="form-group">
+                        <label class="control-label">Nazwisko</label>
+                        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.UserData.Surname)</div>
+                    </div>
+
+                    @* Adress *@
+                    <div class="form-group">
+                        <label class="control-label">Adres</label>
+                        @Html.TextBoxFor(o => o.UserData.Street, new { @class = "form-control", placeholder = "Podaj adres", required = "true" })
+                        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.UserData.Street)</div>
+                    </div>
+
+                    @* City *@
+                    <div class="form-group">
+                        <label class="control-label">Miasto</label>
+                        @Html.TextBoxFor(o => o.UserData.City, new { @class = "form-control", placeholder = "Podaj miasto", required = "true" })
+                        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.UserData.City)</div>
+                    </div>
+
+                    @* Postal code *@
+                    <div class="form-group">
+                        <label class="control-label">Kod pocztowy</label>
+                        @Html.TextBoxFor(o => o.UserData.PostalCode, new { @class = "form-control", placeholder = "Podaj kod pocztowy", required = "true" })
+                        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.UserData.PostalCode)</div>
+                    </div>
+
+                    @* Phone number *@
+                    <div class="form-group">
+                        <label class="control-label">Numer telefonu</label>
+                        @Html.TextBoxFor(o => o.UserData.PhoneNumber, new { @class = "form-control", placeholder = "Podaj numer telefonu", required = "true" })
+                        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.UserData.PhoneNumber)</div>
+                    </div>
+
+                    @*E-mail*@
+                    <div class="form-group">
+                        <label class="control-label">Adres e-mail</label>
+                        @Html.TextBoxFor(o => o.UserData.Email, new { @class = "form-control", placeholder = "Podaj adres e-mail", required = "true" })
+                        <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.UserData.Email)</div>
+                    </div>
+                    @* Button "Potwierdź" *@
+                    <center><button style="margin: 20px; padding: 20px;" type="submit" value="Potwierdź" class="btn btn-success">Potwierdź</button></center>
+                </div>
+            }
+            @* Change password *@
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <h2 style="margin-bottom: 30px;text-align:center">Zmiana hasła</h2>
+                @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post))
+                {
+
+                    @Html.AntiForgeryToken()
+                    // Messages
+                    <div class="incorrect_validation_message" style="text-align:center;">
+                        @Html.ValidationMessage("password-error", "")
+                    </div>
+
+                    if (Model.Message.HasValue)
+                    {
+                        <div class="manage-message">
+                            @switch (Model.Message)
+                            {
+                                case Shop.Controllers.ManageController.ManageMessageId.ChangePasswordSuccess:
+                                    <div class="correct_validation_message">Hasło zmienione pomyślnie!</div>
+                                    break;
+                                case Shop.Controllers.ManageController.ManageMessageId.Error:
+                                    <div class="incorrect_validation_message">Wystąpił błąd</div>
+                                    break;
+                            }
+                        </div>
+                    }
+
+                    <div>
+                        @* Old password *@
+                        <div class="form-group">
+                            <label class="control-label">Stare hasło</label>
+                            @Html.PasswordFor(o => o.ChangePasswordViewModel.OldPassword, new { @class = "form-control", placeholder = "Podaj stare hasło", required = "true" })
+                                <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.ChangePasswordViewModel.OldPassword)</div>
+                        </div>
+
+                        @* New password *@
+                        <div class="form-group">
+                            <label class="control-label">Nowe hasło</label>
+                            @Html.PasswordFor(o => o.ChangePasswordViewModel.NewPassword, new { @class = "form-control", placeholder = "Podaj nowe hasło", required = "true" })
+                                <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.ChangePasswordViewModel.NewPassword)</div>
+                        </div>
+
+                        @* Confirm password *@
+                        <div class="form-group">
+                            <label class="control-label">Potwierdź hasło</label>
+                            @Html.PasswordFor(o => o.ChangePasswordViewModel.ConfirmPassword, new { @class = "form-control", placeholder = "Powtórz hasło", required = "true" })
+                                <div class="incorrect_validation_message">@Html.ValidationMessageFor(o => o.ChangePasswordViewModel.ConfirmPassword)</div>
+                        </div>
+                        @* Button "Zmień" *@
+                        <center><button style="margin: 20px; padding: 20px;" type="submit" value="Zmień" class="btn btn-success">Zmień</button></center>
+                    </div>
+                }
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+
+@section Scripts
+{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+}

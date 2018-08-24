@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Shop.Models.Order>
+
+@{
+    ViewBag.Title = "ListOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <div>
+        @if (Model.Any())
+        {
+            <div class="container">
+                <div class="row">
+                    <section class="col-lg-12col-md-12 col-sm-12 col-xs-12">
+                        @* SiteMap *@
+                        <div>
+                            <div class="mvc_site_map">
+                                <i class="glyphicon glyphicon-home"></i> @Html.MvcSiteMap().SiteMapPath()
+                            </div>
+                            <center><h2>Twoje zamówienia</h2></center>
+                            @* Orders list *@
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th class="col_list">Numer zamówienia</th>
+                                            <th class="col_list">Data</th>
+                                            <th class="col_list">Stan</th>
+                                            <th class="col_list">Dane wysyłkowe</th>
+                                            <th class="col_list">Łączny koszt</th>
+                                            <th class="col_list">Pozycje zamówione</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (var order in Model)
+                                        {
+                                            <tr @if (order.OrderStatus == Shop.Models.OrderStatus.Nowe) { <text> class="newOrder" </text>              }>
+                                                @* Order Id *@
+                                                <td class="col_list">@order.OrderId </td>
+                                                @* Oreder date *@
+                                                <td class="col_list">@order.DateAdded.ToString("dd-MM-yyyy")</td>
+                                                @* Order status *@
+                                                <td class="col_list">
+                                                    @if (ViewBag.UserIsAdmin)
+                                                    {
+                                                        using (Html.BeginForm("ChangeStateOrders", "Manage"))
+                                                        {
+                                                            @Html.HiddenFor(o => order.OrderId)
+                                                            @Html.EnumDropDownListFor(o => order.OrderStatus, new { @class = "StateOrdersChange" })
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DisplayFor(o => order.OrderStatus)
+                                                    }
+                                                </td>
+                                                @* Order data *@
+                                                <td class="col_list">
+                                                    @order.Name @order.Surname<br />
+                                                    @order.PostalCode @order.City<br />
+                                                    @order.Street<br />
+                                                </td>
+                                                @* Order value *@
+                                                <td class="col_list">@order.OrderValue zł</td>
+                                                @* Positions ordered *@
+                                                <td class="col_list">
+                                                    @foreach (var positionOrder in order.PositionsOrder)
+                                                    {
+                                                        <a href="@Url.Action("Details", "Audiobooks", new { id = positionOrder.AudiobookId})">
+                                                            @positionOrder.audiobook.Category.CategoryName - @positionOrder.audiobook.NameAudiobook -
+                                                            @positionOrder.Amount szt. = @(positionOrder.Amount * positionOrder.TotalPrice)  zł<br />
+                                                        </a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="container">
+                <div class="row">
+                    <section class="col-lg-12col-md-12 col-sm-12 col-xs-12">
+                        <div class="col_list" style="margin:50px;">
+                            <b style="font-size:20px;">Brak zamówień.</b>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+
+        }
+    </div>
+
+</div>
+
+
+
+
+
+@section Scripts
+{
+
+    <script>
+        $(".StateOrdersChange").on('change', function (e) {
+            var f = $(this.form);
+            var tr = f.closest("tr");
+            var action = f.attr("action");
+            var serializedForm = f.serialize();
+
+            $.post(action, serializedForm).done(function (data) {
+                if (data == '@Shop.Models.OrderStatus.Nowe.ToString()') {
+                    tr.addClass("newOrder")
+                }
+                else {
+                    tr.removeClass("newOrder");  // Kolorami óżnica zrealizownaych zampowień
+                }
+            });
+        });
+    </script>
+}
+

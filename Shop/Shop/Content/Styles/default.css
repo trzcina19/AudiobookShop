@@ -1,0 +1,35 @@
+﻿body {
+    background-color: white;
+}
+
+
+#hightContrastView {
+    background-color: black;
+    color: #FFFF00;
+}
+
+    #hightContrastView:hover {
+        background-color: #FFFF00;
+        color: black;
+    }
+
+
+#lightview {
+    border-color: black;
+    color: black
+}
+
+    #lightview:hover {
+        background-color: black;
+        color: #fff;
+        border-color: #fff;
+    }
+
+
+
+.carousel-control-next,
+.carousel-control-prev {
+    background-color: black;
+    opacity: 0.6;
+}
+

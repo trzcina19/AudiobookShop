@@ -1,0 +1,18 @@
+﻿@model Shop.ViewModels.OrderRealizedEmail
+Content-Type: text/html; charset=utf-8
+
+<html>
+<head>
+</head>
+<body>
+    <div style="text-align:center; margin:auto;">@Html.EmbedImage("~/content/Images/logo_email.png")</div>
+    <div style="padding: 20px;">
+        <p style="text-indent: 1.5em;">Witaj.</p>
+        <p>Twoje zamówienie nr <b>@Model.OrderId </b> złożone w serwisie Audiobooks zostało wysłane.
+
+        <p>Dziękujemy za skorzystanie z naszych usułg i zapraszamy ponownie.</p>
+        <p>E-mail wysłany automatycznie. Prosimy nie odpisywać.</p>
+        <p style="text-indent: 1.5em;">Zespół Audiobooks</p>
+    </div>
+</body>
+</html>
